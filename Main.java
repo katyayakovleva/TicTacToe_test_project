@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+//TODO определить package для кода, не держать исходники в корне проекта
 public class Main {
     public static void main(String[] args) {
 

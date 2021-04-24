@@ -1,11 +1,15 @@
 
+//TODO создать отдельный класс чтения ввода пользователя и убрать всё использование Scanner за его пределами
 import java.util.Scanner;
 
+//TODO ознакомится с Java Code Conventions или же Google Java Style Guide
+//TODO вынести все вызовы уведомлений (вроде "ход игрока Х") в отдельный класс
 public class TicTacToe {
     private final int SIZE;
     private final String [][] arrOfXAndO;
 
     String player = "O";
+    //TODO стабилизировать количество отступов между методами; вот тут отступа нет, а перед getXorO() он есть
     public TicTacToe(int n){
         SIZE = n;
         arrOfXAndO = new String[SIZE][SIZE];
@@ -23,6 +27,7 @@ public class TicTacToe {
             field();
         }
     }
+    //TODO вынести отрисовку поля в отдельный класс
     private void field(){
         System.out.println("Текущий вид поля:\n");
         System.out.print(" ");
