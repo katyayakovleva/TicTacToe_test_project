@@ -1,32 +1,22 @@
-import java.util.Scanner;
+import TicTacToePackage.Input;
+import TicTacToePackage.TicTacToe;
 
 public class Main {
     public static void main(String[] args) {
-
-        System.out.println("Хотите начать игру (yes/no)");
-
+        MainGameInfo.showMainGameText("start");
         while (true){
-            Scanner in = new Scanner(System.in);
-            String s = in.next();
-            System.out.println();
-            while (!checkInput(s)){
-                System.out.println("Что за хрень ты ввел? Теперь ещё раз и нормально, пожалуйста!");
-                s = in.next();
+            String answer = Input.getAnswer();
+            if (answer.equals("yes")){
+                MainGameInfo.showMainGameText("yes");
+                int size = Input.getSize();
+                TicTacToe ticTacToe = new TicTacToe(size);
+                ticTacToe.ticTacToeGame();
             }
-            if (s.equals("yes")){
-                System.out.print("Выбирете размер поля: ");
-                int n = in.nextInt();
-                TicTacToe ticTacToe = new TicTacToe(n);
-                ticTacToe.game();
-            }
-            else if (s.equals("no")){
-                System.out.println("Ну окей");
+            else {
+                MainGameInfo.showMainGameText("no");
                 return;
             }
-            System.out.println("\nЕщё разок?(yes/no)");
+            MainGameInfo.showMainGameText("repeat");
         }
-    }
-    private static boolean checkInput(String s){
-        return s.equals("no") || s.equals("yes");
     }
 }

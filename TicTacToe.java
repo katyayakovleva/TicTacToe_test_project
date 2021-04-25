@@ -1,141 +1,92 @@
-
-import java.util.Scanner;
+package TicTacToePackage;
 
 public class TicTacToe {
     private final int SIZE;
-    private final String [][] arrOfXAndO;
+    private final String [][] ticTacToeArr_;
+    private String player_ ;
 
-    String player = "O";
-    public TicTacToe(int n){
-        SIZE = n;
-        arrOfXAndO = new String[SIZE][SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                arrOfXAndO[i][j] = " ";
-            }
-        }
+    public TicTacToe(int size){
+        player_ = "O";
+        SIZE = size;
+        ticTacToeArr_ = new String[SIZE][SIZE];
     }
-    public void game(){
-        field();
-        while (checkGame()){
-            System.out.println("Ход игрока "+ player + "\n");
-            getXorO();
-            field();
+    public void ticTacToeGame(){
+        TicTacToeField.getField(ticTacToeArr_, SIZE);
+        while (!checkGameIsEnd()){
+            getPlayerMove();
+            TicTacToeField.getField(ticTacToeArr_, SIZE);
         }
+        TicTacToeInfo.showWinner(player_);
     }
-    private void field(){
-        System.out.println("Текущий вид поля:\n");
-        System.out.print(" ");
-        for (int i = 0; i < SIZE; i++) {
-            System.out.print(" " + (i+1)+ "  ");
-        }
-        System.out.println();
-        for (int i = 0; i < SIZE; i++) {
-            System.out.print(i+1);
-            for (int j = 0; j < SIZE; j++) {
-                System.out.print(" "+ arrOfXAndO[i][j] +" ");
-                if (j<SIZE-1)System.out.print("|");
-            }
-            System.out.println();
-            if (i<SIZE-1){
-                System.out.print(" ");
-                for (int j = 0; j < SIZE; j++) {
-
-                        System.out.print("---");
-
-                    if (j < SIZE-1){
-                        System.out.print("+");
-                    }
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("\n");
-    }
-
-    private void getXorO(){
+    private void getPlayerMove(){
+        TicTacToeInfo.showCurrentPlayer(player_);
         while (true){
-            Scanner in = new Scanner(System.in);
-            System.out.print("Рядочек: ");
-            int line = in.nextInt();
-            System.out.print("Столбик: ");
-            int column=in.nextInt();
-            System.out.println();
-            if (checkInput(line,column)){
-                changeField(line, column);
+            int row = Input.getRow();
+            int column = Input.getColumn();
+            if (checkRowAndColumn(row,column)){
+                changeTicTacToeArr(row, column);
                 return;
             }else {
-                System.out.println("Ты дурак? Вводи ещё раз.\n");
+                TicTacToeInfo.wrongInput();
             }
         }
-
     }
-    private void changeField(int row, int column){
-        arrOfXAndO[row-1][column-1] = player;
+    private void changeTicTacToeArr(int row, int column){
+        ticTacToeArr_[row-1][column-1] = player_;
     }
-    public boolean checkGame(){
-        boolean game = false;
-        String X = "XXX";
-        String O = "OOO";
-        StringBuilder sCheck3 = new StringBuilder();
-        StringBuilder sCheck4 = new StringBuilder();
+    public boolean checkGameIsEnd(){
+        StringBuilder sCheckDiagonal1 = new StringBuilder();
+        StringBuilder sCheckDiagonal2 = new StringBuilder();
         for (int i = 0; i < SIZE; i++) {
 
-            StringBuilder sCheck1 = new StringBuilder();
-            StringBuilder sCheck2 = new StringBuilder();
+            StringBuilder sCheckRows = new StringBuilder();
+            StringBuilder sCheckColumns = new StringBuilder();
 
             for (int j = 0; j < SIZE; j++) {
-               sCheck1.append(arrOfXAndO[i][j]);
-               sCheck2.append(arrOfXAndO[j][i]);
+               sCheckRows.append(ticTacToeArr_[i][j]);
+               sCheckColumns.append(ticTacToeArr_[j][i]);
                if (i == j){
-                   sCheck3.append(arrOfXAndO[i][j]);
+                   sCheckDiagonal1.append(ticTacToeArr_[i][j]);
                }
             }
-            sCheck4.append(arrOfXAndO[SIZE-1-i][i]);
-            if (sCheck1.toString().equals(X) || sCheck1.toString().equals(O)
-                    || sCheck2.toString().equals(X) || sCheck2.toString().equals(O)) {
-                game = true;
-            }
-        }
-        if (sCheck3.toString().equals(X) || sCheck3.toString().equals(O)
-                || sCheck4.toString().equals(X) || sCheck4.toString().equals(O)) {
-            game = true;
-        }
-        if (game) {
-            showWinner();
-            return false;
-        } else {
-            if (checkFieldIsFull()) {
-                changePlayer();
+            sCheckDiagonal2.append(ticTacToeArr_[SIZE-1-i][i]);
+            if (checkIfStringIsEqualsToXXXOrOOO(sCheckRows)
+                    || checkIfStringIsEqualsToXXXOrOOO(sCheckColumns)) {
                 return true;
             }
-            else {
-                System.out.println("Ничья, играйте снова");
-                return false;
-            }
         }
-    }
-    private void showWinner(){
-        System.out.println(player + " - победил\n");
-        changePlayer();
-        System.out.println(player + " - позорно проиграл\n");
-    }
-    private boolean checkFieldIsFull(){
-        int n = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (arrOfXAndO[i][j].equals(" "))
-                    n++;
-            }
+        if (checkIfStringIsEqualsToXXXOrOOO(sCheckDiagonal1)
+                || checkIfStringIsEqualsToXXXOrOOO(sCheckDiagonal2)) {
+            return true;
         }
-        return (n != 0);
+        if (!checkFieldIsFull()) {
+            changePlayer();
+        } else {
+            TicTacToeInfo.draw();
+        }
+        return false;
     }
-    private boolean checkInput(int line, int column){
-        return ((line >= 1 && line <= 3) && (column >= 1 && column <= 3) && arrOfXAndO[line-1][column-1].equals(" "));
+    private boolean checkIfStringIsEqualsToXXXOrOOO(StringBuilder stringCheck){
+        return stringCheck.toString().equals("XXX") || stringCheck.toString().equals("OOO");
+    }
+    private boolean checkRowAndColumn(int row, int column){
+        return ((row >= 1 && row <= 3) && (column >= 1 && column <= 3)
+                && ticTacToeArr_[row-1][column-1] == null);
     }
     private void changePlayer(){
-        if (player.equals("X")){
-            player = "O";
-        }else player = "X";
+        if (!player_.equals("X")) {
+            player_ = "X";
+        } else {
+            player_ = "O";
+        }
+    }
+    private boolean checkFieldIsFull(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (ticTacToeArr_[i][j] == null)
+                    return false;
+            }
+        }
+        return true;
     }
 }
