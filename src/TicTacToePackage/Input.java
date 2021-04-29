@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Input {
 
     static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
+    //TODO убрать static модификатор из методов этого класса
     public static String getAnswer() throws IOException {
         String answer = bufferedReader.readLine();
         while (!checkAnswer(answer)){
@@ -22,6 +22,7 @@ public class Input {
     }
     public static int getSize() throws IOException {
         String s = bufferedReader.readLine();
+        //Regex, хороший вибор
         while (!Pattern.matches("^[1-9]\\d*$",s)){
             PrintInfo.wrongInput(PrintInfo.WrongEnters.WRONG_ENTER_SIZE);
             s = bufferedReader.readLine();
