@@ -1,6 +1,9 @@
 import TicTacToePackage.*;
 import java.io.IOException;
 
+//TODO перейдём на следующий этап разработки
+//Добавим в проект Dependency Manager и сконфигурируем сборку исполняемого jar файла
+//DM возьмём Maven, т.к. я с ним лучше знаком, чем с Gradle или Ant
 public class Main {
     public static void main(String[] args) throws IOException {
         PrintInfo.showMainGameText(PrintInfo.Answer.START);

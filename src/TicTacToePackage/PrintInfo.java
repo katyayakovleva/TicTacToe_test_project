@@ -4,7 +4,9 @@ public class PrintInfo {
 
     public enum Answer{START, YES, NO, REPEAT}
     public enum WrongEnters{ WRONG_ENTER_ANSWER, WRONG_ENTER_PLACE_DONT_EXIST, WRONG_ENTER_RACE_IS_FULL, WRONG_ENTER_SIZE}
-
+    //Лямбда кейсы, неплохо
+    //Свежий функционал в JDK
+    //TODO убрать static модификатор из методов этого класса
     public static void showMainGameText(Answer answer){
         switch (answer) {
             case START -> System.out.print("\nХотите начать игру (yes/no): ");
