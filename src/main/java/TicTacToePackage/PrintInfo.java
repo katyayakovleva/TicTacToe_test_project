@@ -37,8 +37,7 @@ public class PrintInfo {
             case WRONG_ENTER_ANSWER ->System.out.println("\nЧто за хрень ты ввел? Теперь ещё раз и нормально, пожалуйста!");
             case WRONG_ENTER_SIZE -> {
                 System.out.println("\nВведите число больше 0, потому что вы ввели бред\n");
-                PrintInfo printInfo = new PrintInfo();
-                printInfo.printGetSize();
+                printGetSize();
             }
             case WRONG_ENTER_RACE_IS_FULL -> System.out.println("\nВидимо у кого-то проблемы с памятью) Это место уже занято\n");
             case WRONG_ENTER_PLACE_DONT_EXIST -> System.out.println("\nПротри глаза, ты где такое место на поле то увидел?\n");
