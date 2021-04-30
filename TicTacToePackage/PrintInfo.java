@@ -1,7 +1,7 @@
 package TicTacToePackage;
 
 public class PrintInfo {
-
+    //Выделить enum в отдельные файлы, что бы упросить ссылки на содержимое
     public enum Answer{START, YES, NO, REPEAT}
     public enum WrongEnters{ WRONG_ENTER_ANSWER, WRONG_ENTER_PLACE_DONT_EXIST, WRONG_ENTER_RACE_IS_FULL, WRONG_ENTER_SIZE}
 
@@ -37,6 +37,8 @@ public class PrintInfo {
             case WRONG_ENTER_ANSWER ->System.out.println("\nЧто за хрень ты ввел? Теперь ещё раз и нормально, пожалуйста!");
             case WRONG_ENTER_SIZE -> {
                 System.out.println("\nВведите число больше 0, потому что вы ввели бред\n");
+                //???
+                //зачем?
                 PrintInfo printInfo = new PrintInfo();
                 printInfo.printGetSize();
             }
